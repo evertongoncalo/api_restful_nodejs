@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const dbName = "api_restful"
 
-const uri = `mongodb+srv://evertonaga88:%40Evt298747@cluster0.b4ruaym.mongodb.net/${dbName}?retryWrites=true`
+const uri = ``
 
 async function main(){
     try {
