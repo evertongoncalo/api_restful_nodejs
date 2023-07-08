@@ -52,12 +52,26 @@ async function put(request,response){
 
 }
 
+async function remove(request,response){
+    const {id} = request.params
+
+    const prod = await ProductModel.findOneAndDelete({_id : id}) 
+
+    
+    response.send({
+        message : 'success',
+        prod
+    })
+
+}
+
 
 
 module.exports = {
     get,
     post,
     put,
+    remove,
 
 
 }
