@@ -1,13 +1,12 @@
 const mongoose = require('mongoose')
+require('dotenv').config(); 
 
-const dbName = "api_restfult"
-
-const uri = `mongodb+srv://evertonaga88:%40Evt298747@cluster0.b4ruaym.mongodb.net/${dbName}?retryWrites=true`
+const keyURI = process.env.KEY_URI
 
 async function main(){
     try {
         
-        await mongoose.connect(uri)
+        await mongoose.connect(keyURI)
         console.log(`Connected`)
     } catch (error) {
         console.log(`Erro: ${error}`)
