@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 
 const app = express()
 
@@ -13,7 +14,23 @@ const routes = require('./routes/routes')
 
 const conn = require('./db/conn')
 
+/*habilitar o cors */
+const allowedOrigins = [
+    'http://127.0.0.1:5500',
+
+]
+app.use(cors({
+    origin :  function (origin, callback){
+        let allowed = true
+        if(!origin) {allowed = true} 
+        if(!allowedOrigins.includes(origin)) {allowed = false} 
+
+        callback(null,allowed)
+    }
+}))
+
 conn()
+
 
 const port = process.env.PORT || 8080
 const path = require('path')
