@@ -8,15 +8,91 @@
 <body>
 
 
-    <h1>Hi!!</h1>
+    <h2>Products List</h2>
+    <ul id="products-list">
+        
+    </ul>
+
+
+    <hr>
+
+    <h2>Cadastrar</h2>
+    <form id="form">
+        <div>
+            <label for="product">
+                Product:
+                <input type="text" name="product">
+            </label>
+        </div>
+        <div>
+            <label for="brand">
+                Brand:
+                <input type="text" name="brand">
+            </label>
+        </div>
+        <div>
+            <label for="price">
+                Price:
+                <input type="text" name="price">
+            </label>
+        </div>
+        
+        <button type="submit">Cadastrar</button>
+    </form>
 
 
     <script>
-        fetch('http://localhost:8080/api/products').then(response =>{
-            console.log(response.json(data =>{
-                console.log(data)
-            }))
-        })
+        const API_URL = 'http://localhost:8080/api/products'
+        const formulario = document.querySelector('#form')
+        const productList = document.querySelector('#products-list')
+
+
+        function obterLista(){
+            fetch(API_URL).then(response =>{
+
+                response.json().then(data =>{
+    
+                    const productsHtml = data.map(product =>
+                    `<li>
+                        ${product.product} - ${product.brand} - ${product.price}
+                    </li>
+                    `
+                    ).join('')
+                    productList.innerHTML = productsHtml
+    
+                })
+                
+            })
+
+        }
+
+        obterLista()
+
+        
+
+        form.onsubmit = function (e){
+            e.preventDefault()
+
+            const product = document.forms['form'].product.value
+            const brand = document.forms['form'].brand.value
+            const price = document.forms['form'].price.value
+
+            fetch(API_URL, {
+                method: 'POST',
+                headers: {'Content-type': 'Application/json'},  /*Faz retornar o json do formulario para conseguir cadastrar*/
+                body: JSON.stringify({
+                    product,
+                    brand,
+                    price
+                })
+            }).then(response =>{
+                form.reset() /*retorna o form em branco*/
+                obterLista()
+                console.log(response)
+            })
+                
+
+        }
 
     </script>
     
